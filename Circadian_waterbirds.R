@@ -1,4 +1,4 @@
-setwd("C:/Users/00156874/Google Drive/UFRGS/Alunos/Tarcísio Linhares/Análises")
+setwd("C:/Users/00156874/Google Drive/UFRGS/Alunos/TarcÃ­sio Linhares/AnÃ¡lises")
 bird <- read.table(file="birdstime.csv", sep=",", h=T)
 head(bird)
 str(bird)
@@ -15,26 +15,26 @@ bird <- bird[-c(42, 51), ]
 bird <- na.omit(bird)
 dim(bird)  
 
-## CALCULANDO OCORRÊNCIA E INSERINDO UMA NOVA COLUNA NA OUTRA MATRIZ
+## CALCULANDO OCORRÃŠNCIA E INSERINDO UMA NOVA COLUNA NA OUTRA MATRIZ
 library(plyr)
 spp.occ <- ldply(bird[,15:60], function(c) sum(c >0))
 spp.row <- read.table(file="sp.row.csv", sep=",", h=T)
 spp.row$occ <- spp.occ$V1
 
-## CALCULANDO FREQUÊNCIA DE OCORRÊNCIA
-dim(bird)  #para identificar o número de observações = 145 (i.e. 100%)
+## CALCULANDO FREQUÃŠNCIA DE OCORRÃŠNCIA
+dim(bird)  #para identificar o nÃºmero de observaÃ§Ãµes = 145 (i.e. 100%)
 spp.row$freq_occ <- (spp.row$occ*100)/145
 sort(spp.row$freq_occ) 
 sort_freq_occ <- spp.row[order(spp.row[,"freq_occ"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE)
 
-## NÚMERO DE ESPÉCIES EM CADA CENSO
+## NÃšMERO DE ESPÃ‰CIES EM CADA CENSO
 head(bird)
 names(bird)
 a <- rowSums(bird[,15:60]!=0)
 bird$num.spp <- apply(bird[,15:60],1,function(x)sum(x != 0))
 
-## PLOTAR NA ORDEM CRONOLÓGICA
+## PLOTAR NA ORDEM CRONOLÃ“GICA
 #Riqueza
 levels(bird$Time)
 circa.time <- factor(bird$Time, levels=c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"))
@@ -49,12 +49,12 @@ plot.num.spp <- ggplot(bird, aes(x=circa.time, y=bird$num.spp, fill=bird$Beach),
   geom_boxplot()
 plot.num.spp + guides(fill=guide_legend(title=NULL))
 plot.num.spp <- plot.num.spp + scale_fill_discrete(name="Beach",
-                         labels=c("Cabras", "Nova Tramandaí"))
+                         labels=c("Cabras", "Nova TramandaÃ­"))
 plot.num.spp <- plot.num.spp + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 plot.num.spp <- plot.num.spp + theme(legend.position=c(0.9,0.9)) + labs(x = "", y = "Number of species")
 plot.num.spp
 
-#Abundância
+#AbundÃ¢ncia
 levels(bird$Time)
 circa.time <- factor(bird$Time, levels=c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"))
 plot(bird$totabund ~ circa.time)
@@ -65,18 +65,18 @@ plot(bird.ntdai$totabund ~ circa.time.ntdai)
 
 par(mfrow=c(1,2))
 plot(bird.cabras$totabund ~ circa.time.cabras, xlab = "Census", ylab = "Species Richness", main = "Cabras")
-plot(bird.ntdai$totabund ~ circa.time.ntdai, xlab = "Census", ylab = "Species Richness", main = "Nova Tramandaí")
+plot(bird.ntdai$totabund ~ circa.time.ntdai, xlab = "Census", ylab = "Species Richness", main = "Nova TramandaÃ­")
 
 par(mfrow=c(1,2))
 plot(log(bird.cabras$totabund) ~ circa.time.cabras, xlab = "Census", ylab = "Total Abundance", main = "Cabras")
-plot(log(bird.ntdai$totabund) ~ circa.time.ntdai, xlab = "Census", ylab = "Total Abundance", main = "Nova Tramandaí")
+plot(log(bird.ntdai$totabund) ~ circa.time.ntdai, xlab = "Census", ylab = "Total Abundance", main = "Nova TramandaÃ­")
 
 library(ggplot2)
 plot.totabund <- ggplot(bird, aes(x=circa.time, y=log(bird$totabund), fill=bird$Beach)) + 
   geom_boxplot()
 plot.totabund + guides(fill=guide_legend(title=NULL))
 plot.totabund <- plot.totabund + scale_fill_discrete(name="Beach",
-                               labels=c("Cabras", "Nova Tramandaí"))
+                               labels=c("Cabras", "Nova TramandaÃ­"))
 plot.totabund <- plot.totabund + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 plot.totabund <- plot.totabund + theme(legend.position=c(0.9,0.9)) + labs(x = "", y = "Total Abundance (log)")
 plot.totabund
@@ -87,13 +87,13 @@ bird.cabras
 bird.ntdai <- bird[which(bird$Beach=="Nova_Tdai"),]
 ntdai
 
-## CALCULANDO FREQUÊNCIA DE OCORRÊNCIA PARA CADA PRAIA
+## CALCULANDO FREQUÃŠNCIA DE OCORRÃŠNCIA PARA CADA PRAIA
 #Cabras
 names(bird.cabras)
 spp.occ.cabras <- ldply(bird.cabras[,15:60], function(c) sum(c >0))
 spp.row <- read.table(file="sp.row.csv", sep=",", h=T)
 spp.row$occ.cabras <- spp.occ.cabras$V1
-dim(bird.cabras)  #para identificar o número de observações = 68 (i.e. 100%)
+dim(bird.cabras)  #para identificar o nÃºmero de observaÃ§Ãµes = 68 (i.e. 100%)
 spp.row$freq_occ.cabras <- (spp.row$occ.cabras*100)/68
 sort(spp.row$freq_occ.cabras) 
 sort_freq_occ <- spp.row[order(spp.row[,"freq_occ.cabras"]), , drop=FALSE] #rankear
@@ -105,21 +105,21 @@ names(bird.ntdai)
 spp.occ.ntdai <- ldply(bird.ntdai[,15:60], function(c) sum(c >0))
 spp.row <- read.table(file="sp.row.csv", sep=",", h=T)
 spp.row$occ.ntdai <- spp.occ.ntdai$V1
-dim(bird.ntdai)  #para identificar o número de observações = 68 (i.e. 100%)
+dim(bird.ntdai)  #para identificar o nÃºmero de observaÃ§Ãµes = 68 (i.e. 100%)
 spp.row$freq_occ.ntdai <- (spp.row$occ.ntdai*100)/77
 sort(spp.row$freq_occ.ntdai) 
 sort_freq_occ <- spp.row[order(spp.row[,"freq_occ.ntdai"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## REMOVER COLUNAS INDESEJADAS - se necessário!! Cuidado!
+## REMOVER COLUNAS INDESEJADAS - se necessÃ¡rio!! Cuidado!
 spp.row <- spp.row[,-(1),drop=FALSE] 
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## ABUNDÂNCIA TOTAL EM CADA CENSO (fixar como uma coluna na planilha)
+## ABUNDÃ‚NCIA TOTAL EM CADA CENSO (fixar como uma coluna na planilha)
 bird$totabund <- apply(bird[,20:65], 1, sum)
 
 # PLOT SIMPLES
-hist(bird$totabund, main = "Número de observações", xlab = "Abundância por censo", ylab = "Frequência")  # notar a distribuição não normal (típica de dados de contagem)
+hist(bird$totabund, main = "NÃºmero de observaÃ§Ãµes", xlab = "AbundÃ¢ncia por censo", ylab = "FrequÃªncia")  # notar a distribuiÃ§Ã£o nÃ£o normal (tÃ­pica de dados de contagem)
 
 # PLOT FIRULA
 library(tidyverse)
@@ -129,74 +129,74 @@ hist.counts <- ggplot(bird, aes(x=bird$totabund)) +
   ggtitle("Countings distribution")
 hist.counts
 
-## ABUNDÂNCIA RELATIVA GLOBAL
+## ABUNDÃ‚NCIA RELATIVA GLOBAL
 head(spp.row)
 sum(spp.row$tot.abund)
 spp.row$tot.rel.abu <- ((spp.row$tot.abund*100)/10837) #calcular e inserir como uma nova coluna
 sort_rel.abu <- spp.row[order(spp.row[,"tot.rel.abu"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## ABUNDÂNCIA RELATIVA CABRAS
+## ABUNDÃ‚NCIA RELATIVA CABRAS
 head(spp.row)
 sum(spp.row$ab_Cabras)
 spp.row$rel.abu.cabras <- ((spp.row$ab_Cabras*100)/6594) #calcular e inserir como uma nova coluna
 sort_rel.abu <- spp.row[order(spp.row[,"rel.abu.cabras"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## ABUNDÂNCIA RELATIVA NOVA TRAMANDAÍ
+## ABUNDÃ‚NCIA RELATIVA NOVA TRAMANDAÃ
 head(spp.row)
 sum(spp.row$ab_NTdai)
 spp.row$rel.abu.ntdai <- ((spp.row$ab_NTdai*100)/4243) #calcular e inserir como uma nova coluna
 sort_rel.abu <- spp.row[order(spp.row[,"rel.abu.ntdai"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## SEPARANDO OS HORÁRIOS
+## SEPARANDO OS HORÃRIOS
 dim(bird)
 names(bird)
 tail(bird)
 
-## DIFERENÇA NAS ABUNDÂNCIAS ENTRE AS PRAIAS
+## DIFERENÃ‡A NAS ABUNDÃ‚NCIAS ENTRE AS PRAIAS
 par(mfrow=c(1,2))
 hist(bird$totabund[which(bird$Beach=="Cabras")], xlab = "Total abundance", main = "Total abundance - Praia das Cabras")
-hist(bird$totabund[which(bird$Beach=="Nova_Tdai")], xlab = "Total abundance", main = "Total abundance - Nova Tramandaí")
-# notar a diferença nas distribuições
+hist(bird$totabund[which(bird$Beach=="Nova_Tdai")], xlab = "Total abundance", main = "Total abundance - Nova TramandaÃ­")
+# notar a diferenÃ§a nas distribuiÃ§Ãµes
 
-#  SEM NORMALIDADE NOS DADOS, VAMOS PARA UM TESTE NÃO PARAMÉTRICO
+#  SEM NORMALIDADE NOS DADOS, VAMOS PARA UM TESTE NÃƒO PARAMÃ‰TRICO
 test.totabund.beach <- wilcox.test(bird$totabund~bird$Beach)
-test.totabund.beach # não temos diferença significativa na abundância entre praias
+test.totabund.beach # nÃ£o temos diferenÃ§a significativa na abundÃ¢ncia entre praias
 
 library(ggplot2)
 ggplot(bird, aes(x=as.factor(bird$Beach), y=bird$totabund)) + 
   geom_boxplot(fill="slateblue", alpha=0.2) + 
-  xlab("Praias") + ylab("Abundância")
+  xlab("Praias") + ylab("AbundÃ¢ncia")
 
-## ABUNDÂNCIA GLOBAL ESPÉCIE ESPECÍFICA
+## ABUNDÃ‚NCIA GLOBAL ESPÃ‰CIE ESPECÃFICA
 sp.abund <- apply(bird[,20:66], 2, sum, na.rm=TRUE)
 bird[148,20:66] <- sp.abund
 tail(bird)
-# na última linha linha está a abundância global espécie específica
-# na última linha da última coluna está o total de observações do estudo
+# na Ãºltima linha linha estÃ¡ a abundÃ¢ncia global espÃ©cie especÃ­fica
+# na Ãºltima linha da Ãºltima coluna estÃ¡ o total de observaÃ§Ãµes do estudo
 
-## ABUNDÂNCIA GLOBAL ESPÉCIE ESPECÍFICA EM CADA PRAIA
+## ABUNDÃ‚NCIA GLOBAL ESPÃ‰CIE ESPECÃFICA EM CADA PRAIA
 # Cabras
 sp.abund.cabras <- apply(cabras[,20:65], 2, sum, na.rm=TRUE)
-sp.abund.cabras # abundância espécie-específica registrada nas Cabras
+sp.abund.cabras # abundÃ¢ncia espÃ©cie-especÃ­fica registrada nas Cabras
 rev(sort(sp.abund.cabras)) # por ordem 
 
 sp.abund.cabras <- as.numeric(sp.abund.cabras)
 spp.reg.cabras <- sp.abund.cabras>0
-summary(spp.reg.cabras) #TRUE é o total de spp. registradas nas cabras
+summary(spp.reg.cabras) #TRUE Ã© o total de spp. registradas nas cabras
 
-# Nova Tramandaí
+# Nova TramandaÃ­
 sp.abund.ntdai <- apply(ntdai[,20:65], 2, sum, na.rm=TRUE)
-sp.abund.ntdai # abundância espécie-específica registrada em Nova Tramandaí
+sp.abund.ntdai # abundÃ¢ncia espÃ©cie-especÃ­fica registrada em Nova TramandaÃ­
 rev(sort(sp.abund.ntdai)) # por ordem 
 
 sp.abund.ntdai <- as.numeric(sp.abund.ntdai)
 spp.reg.ntdai <- sp.abund.ntdai>0
-summary(spp.reg.ntdai) #TRUE é o total de spp. registradas nas cabras
+summary(spp.reg.ntdai) #TRUE Ã© o total de spp. registradas nas cabras
 
-## CRIAR PLANILHA COM SPP NAS LINHAS E ABUNDÂNCIAS NAS COLUNAS
+## CRIAR PLANILHA COM SPP NAS LINHAS E ABUNDÃ‚NCIAS NAS COLUNAS
 sp.abund.cabras <- apply(cabras[,20:65], 2, sum, na.rm=TRUE)
 sp.abund.ntdai <- apply(ntdai[,20:65], 2, sum, na.rm=TRUE)
 write.csv(sp.abund.cabras,"sp.abund.cabras.csv", row.names= TRUE)
@@ -221,7 +221,7 @@ library(ggridges)
 library(ggplot2)
 
 ## TOTAL
-# Abundância
+# AbundÃ¢ncia
 ridge.ab <- ggplot(bird, aes(x = bird$totabund, y = circa.time, fill = circa.time)) +
   geom_density_ridges() +
   theme_ridges() + 
@@ -249,7 +249,7 @@ ridge.div <- ridge.div + labs(x = "", y = "") + ggtitle("24-hour species diversi
 ridge.div
 
 ## Cabras
-# Abundância
+# AbundÃ¢ncia
 ridge.ab.cabras <- ggplot(bird.cabras, aes(x = bird.cabras$totabund, y = circa.time.cabras, fill = circa.time.cabras)) +
   geom_density_ridges() +
   theme_ridges() + 
@@ -274,13 +274,13 @@ ridge.div.cabras <- ridge.div.cabras + labs(x = "", y = "") + ggtitle("24-hour s
   theme(plot.title = element_text(hjust = 0.8))
 ridge.div.cabras
 
-## Nova Tramandaí
-# Abundância
+## Nova TramandaÃ­
+# AbundÃ¢ncia
 ridge.ab.ntdai <- ggplot(bird.ntdai, aes(x = bird.ntdai$totabund, y = circa.time.ntdai, fill = circa.time.ntdai)) +
   geom_density_ridges() +
   theme_ridges() + 
   theme(legend.position = "none")
-ridge.ab.ntdai <- ridge.ab.ntdai + labs(x = "", y = "") + ggtitle("24-hour total abundance distribution - Nova Tramandaí") +
+ridge.ab.ntdai <- ridge.ab.ntdai + labs(x = "", y = "") + ggtitle("24-hour total abundance distribution - Nova TramandaÃ­") +
   theme(plot.title = element_text(hjust = 0.8))
 
 # Riqueza
@@ -288,7 +288,7 @@ ridge.rich.ntdai <- ggplot(bird.ntdai, aes(x = bird.ntdai$num.spp, y = circa.tim
   geom_density_ridges() +
   theme_ridges() + 
   theme(legend.position = "none")
-ridge.rich.ntdai <- ridge.rich.ntdai + labs(x = "", y = "") + ggtitle("24-hour number of species distribution - Nova Tramandaí") +
+ridge.rich.ntdai <- ridge.rich.ntdai + labs(x = "", y = "") + ggtitle("24-hour number of species distribution - Nova TramandaÃ­") +
   theme(plot.title = element_text(hjust = 0.8))
 
 # Diversidade (Shannon)
@@ -296,7 +296,7 @@ ridge.div.ntdai <- ggplot(bird.ntdai, aes(x = bird.ntdai$shannon.div, y = circa.
   geom_density_ridges() +
   theme_ridges() + 
   theme(legend.position = "none")
-ridge.div.ntdai <- ridge.div.ntdai + labs(x = "", y = "") + ggtitle("24-hour species diversity distribution - Nova Tramandaí") +
+ridge.div.ntdai <- ridge.div.ntdai + labs(x = "", y = "") + ggtitle("24-hour species diversity distribution - Nova TramandaÃ­") +
   theme(plot.title = element_text(hjust = 0.8))
 ridge.div.ntdai
 
@@ -314,14 +314,14 @@ shannon.div.cabras <- diversity(bird.cabras[,15:60], index = "shannon", MARGIN =
 shannon.div.ntdai <- diversity(bird.ntdai[,15:60], index = "shannon", MARGIN = 1, base = exp(1))
 par(mfrow=c(1,2))
 boxplot(shannon.div.cabras~circa.time.cabras, main = "Diversidade de Shannon - Praia das Cabras")
-boxplot(shannon.div.ntdai~circa.time.ntdai, main = "Diversidade de Shannon - Nova Tramandaí")
+boxplot(shannon.div.ntdai~circa.time.ntdai, main = "Diversidade de Shannon - Nova TramandaÃ­")
 
 # PLOT
 bp <- ggplot(bird, aes(x=circa.time, y=log(bird$shannon.div), fill=bird$Beach)) + 
   geom_boxplot()
 bp + guides(fill=guide_legend(title=NULL))
 bp <- bp + scale_fill_discrete(name="Beach",
-                               labels=c("Cabras", "Nova Tramandaí"))
+                               labels=c("Cabras", "Nova TramandaÃ­"))
 bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 bp <- bp + theme(legend.position=c(0.1,0.1)) + labs(x = "", y = "Shannon's species diversity")
 
@@ -330,12 +330,12 @@ bp <- bp + theme(legend.position=c(0.1,0.1)) + labs(x = "", y = "Shannon's speci
 bird$simpson.div <- diversity(bird[,15:60], index = "simpson", MARGIN = 1, base = exp(1))
 boxplot(bird$simpson.div~circa.time)
 
-## NÚMERO DE ESPÉCIES EM CADA HORÁRIO E PRAIA
+## NÃšMERO DE ESPÃ‰CIES EM CADA HORÃRIO E PRAIA
 library(vegan)
 specnumber(bird[,15:60], bird$Time, MARGIN = 1)
 specnumber(bird[,15:60], bird$Beach, MARGIN = 1)
 
-## CURVA DE ACUMULAÇÃO DE ESPÉCIES - Function 'specaccum' finds species accumulation curves or the number of species for a certain number of sampled sites or individuals.
+## CURVA DE ACUMULAÃ‡ÃƒO DE ESPÃ‰CIES - Function 'specaccum' finds species accumulation curves or the number of species for a certain number of sampled sites or individuals.
 sac <- specaccum(bird[,15:60], method = "random")
 plot(sac, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue")
 boxplot(sac, col="yellow", add=TRUE, pch="+")
@@ -345,7 +345,7 @@ sac.cabras <- specaccum(bird.cabras[,15:60], method = "random")
 plot(sac.cabras, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue")
 boxplot(sac.cabras, col="yellow", add=TRUE, pch="+")
 
-# Nova Tramandaí
+# Nova TramandaÃ­
 sac.ntdai <- specaccum(bird.ntdai[,15:60], method = "random")
 plot(sac.ntdai, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue")
 boxplot(sac.ntdai, col="yellow", add=TRUE, pch="+")
@@ -360,7 +360,7 @@ waterbird = subset(bird, select = -c(num.spp,totabund,shannon.div,simpson.div,
 waterbird = subset(waterbird, select = -c(X, X.1))
 names(waterbird)
 write.csv(waterbird,"waterbirdstime.csv", row.names= TRUE)
-setwd("C:/Users/00156874/Google Drive/UFRGS/Alunos/Tarcísio Linhares/Análises")
+setwd("C:/Users/00156874/Google Drive/UFRGS/Alunos/TarcÃ­sio Linhares/AnÃ¡lises")
 waterbird <- read.table(file="waterbirdstime.csv", sep=",", h=T)
 head(waterbird)
 
@@ -375,18 +375,18 @@ waterbird.ntdai <- waterbird[which(waterbird$Beach=="Nova_Tdai"),]
 waterbird.ntdai
 
 ## Chamar no laptop
-setwd("E:/Google Drive/UFRGS/Alunos/Tarcísio Linhares/Análises")
+setwd("E:/Google Drive/UFRGS/Alunos/TarcÃ­sio Linhares/AnÃ¡lises")
 
-## NÚMERO DE ESPÉCIES EM CADA CENSO
+## NÃšMERO DE ESPÃ‰CIES EM CADA CENSO
 a <- rowSums(waterbird[,15:39]!=0)
 waterbird$num.spp <- apply(waterbird[,15:39],1,function(x)sum(x != 0))
 
-## ABUNDÂNCIA TOTAL EM CADA CENSO (fixar como uma coluna na planilha)
+## ABUNDÃ‚NCIA TOTAL EM CADA CENSO (fixar como uma coluna na planilha)
 waterbird$totabund <- apply(waterbird[,15:39], 1, sum)
 hist(waterbird$totabund)
 
 # PLOT SIMPLES
-hist(waterbird$totabund, main = "Número de observações", xlab = "Abundância por censo", ylab = "Frequência")  # notar a distribuição não normal (típica de dados de contagem)
+hist(waterbird$totabund, main = "NÃºmero de observaÃ§Ãµes", xlab = "AbundÃ¢ncia por censo", ylab = "FrequÃªncia")  # notar a distribuiÃ§Ã£o nÃ£o normal (tÃ­pica de dados de contagem)
 
 # PLOT FIRULA
 library(tidyverse)
@@ -396,7 +396,7 @@ hist.counts <- ggplot(waterbird, aes(x=waterbird$totabund)) +
   ggtitle("Countings distribution")
 hist.counts
 
-## CALCULANDO OCORRÊNCIA E INSERINDO UMA NOVA COLUNA NA OUTRA MATRIZ
+## CALCULANDO OCORRÃŠNCIA E INSERINDO UMA NOVA COLUNA NA OUTRA MATRIZ
 library(plyr)
 spp.occ <- ldply(waterbird[,15:39], function(c) sum(c >0))
 write.csv(spp.occ,"waterbird.sp.row.csv", row.names= TRUE)
@@ -418,27 +418,27 @@ water.spp.row$spp.occ.cabras <- subset(water.spp.row$spp.occ.cabras, select = -(
 water.spp.row$spp.occ.ntdai <- ldply(waterbird.ntdai[,15:39], function(c) sum(c >0))
 water.spp.row$spp.occ.ntdai <- subset(water.spp.row$spp.occ.ntdai, select = -(c(.id)))
 
-## CALCULANDO FREQUÊNCIA DE OCORRÊNCIA
-dim(waterbird)  #para identificar o número de observações = 143 (i.e. 100%)
+## CALCULANDO FREQUÃŠNCIA DE OCORRÃŠNCIA
+dim(waterbird)  #para identificar o nÃºmero de observaÃ§Ãµes = 143 (i.e. 100%)
 water.spp.row$freq_occ <- (water.spp.row$occ*100)/143
 sort(water.spp.row$freq_occ) 
 sort_freq_occ <- water.spp.row[order(water.spp.row[,"freq_occ"]), , drop=FALSE] #rankear
 
-dim(waterbird.cabras)  #para identificar o número de observações nas Cabras = 66 (i.e. 100%)
+dim(waterbird.cabras)  #para identificar o nÃºmero de observaÃ§Ãµes nas Cabras = 66 (i.e. 100%)
 water.spp.row$freq_occ.cabras <- (water.spp.row$spp.occ.cabras*100)/66
-dim(waterbird.ntdai)  #para identificar o número de observações em N Tramandaí = 77 (i.e. 100%)
+dim(waterbird.ntdai)  #para identificar o nÃºmero de observaÃ§Ãµes em N TramandaÃ­ = 77 (i.e. 100%)
 water.spp.row$freq_occ.ntdai <- (water.spp.row$spp.occ.ntdai*100)/77
 names(water.spp.row)
 sort_freq_occ.cabras <- water.spp.row[order(water.spp.row[,"freq_occ.cabras"]), , drop=FALSE] #rankear
 sort_freq_occ.ntdai <- water.spp.row[order(water.spp.row[,"freq_occ.ntdai"]), , drop=FALSE] #rankear
 
-## ABUNDÂNCIA GLOBAL
+## ABUNDÃ‚NCIA GLOBAL
 
 water.spp.row$sp.abund <- apply(waterbird[,15:39], 2, sum, na.rm=TRUE)
 sort_abund <- water.spp.row[order(water.spp.row[,"sp.abund"]), , drop=FALSE] #rankear
 
 
-## ABUNDÂNCIA RELATIVA GLOBAL
+## ABUNDÃ‚NCIA RELATIVA GLOBAL
 head(water.spp.row)
 sum(water.spp.row$sp.abund)
 water.spp.row$tot.rel.abu <- ((water.spp.row$sp.abund*100)/10355) #calcular e inserir como uma nova coluna
@@ -446,14 +446,14 @@ sort_rel.abu <- water.spp.row[order(water.spp.row[,"tot.rel.abu"]), , drop=FALSE
 sum(water.spp.row$tot.rel.abu)
 water.spp.row <- subset(water.spp.row, select = -(c(X)))
 
-## ABUNDÂNCIA RELATIVA CABRAS
+## ABUNDÃ‚NCIA RELATIVA CABRAS
 head(spp.row)
 sum(spp.row$ab_Cabras)
 spp.row$rel.abu.cabras <- ((spp.row$ab_Cabras*100)/6594) #calcular e inserir como uma nova coluna
 sort_rel.abu <- spp.row[order(spp.row[,"rel.abu.cabras"]), , drop=FALSE] #rankear
 write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 
-## ABUNDÂNCIA RELATIVA NOVA TRAMANDAÍ
+## ABUNDÃ‚NCIA RELATIVA NOVA TRAMANDAÃ
 head(spp.row)
 sum(spp.row$ab_NTdai)
 spp.row$rel.abu.ntdai <- ((spp.row$ab_NTdai*100)/4243) #calcular e inserir como uma nova coluna
@@ -465,7 +465,7 @@ write.csv(spp.row,"sp.row.csv", row.names= TRUE) # salvar
 library(vegan)
 names(waterbird)
 
-#DEFININDO ORDEM CRONOLÓGICA
+#DEFININDO ORDEM CRONOLÃ“GICA
 circa.time <- factor(waterbird$Time, levels=c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"))
 circa.time.cabras <- factor(waterbird.cabras$Time, levels=c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"))
 circa.time.ntdai <- factor(waterbird.ntdai$Time, levels=c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"))
@@ -477,10 +477,10 @@ shannon.div.cabras <- diversity(waterbird.cabras[,15:39], index = "shannon", MAR
 shannon.div.ntdai <- diversity(waterbird.ntdai[,15:39], index = "shannon", MARGIN = 1, base = exp(1))
 par(mfrow=c(1,2))
 boxplot(shannon.div.cabras~circa.time.cabras, main = "Diversidade de Shannon - Praia das Cabras")
-boxplot(shannon.div.ntdai~circa.time.ntdai, main = "Diversidade de Shannon - Nova Tramandaí")
+boxplot(shannon.div.ntdai~circa.time.ntdai, main = "Diversidade de Shannon - Nova TramandaÃ­")
 mean(shannon.div.cabras)
 mean(shannon.div.ntdai)
-hist(waterbird$shannon.div) ## distribuição não normal = análise não paramétrica
+hist(waterbird$shannon.div) ## distribuiÃ§Ã£o nÃ£o normal = anÃ¡lise nÃ£o paramÃ©trica
 hist(shannon.div.cabras) 
 hist(shannon.div.ntdai)
 
@@ -492,28 +492,28 @@ simpson.div.cabras <- diversity(waterbird.cabras[,15:39], index = "simpson", MAR
 simpson.div.ntdai <- diversity(waterbird.ntdai[,15:39], index = "simpson", MARGIN = 1, base = exp(1))
 par(mfrow=c(1,2))
 boxplot(simpson.div.cabras~circa.time.cabras, main = "Diversidade de Simpson - Praia das Cabras")
-boxplot(simpson.div.ntdai~circa.time.ntdai, main = "Diversidade de Simpson - Nova Tramandaí")
+boxplot(simpson.div.ntdai~circa.time.ntdai, main = "Diversidade de Simpson - Nova TramandaÃ­")
 mean(simpson.div.cabras)
 mean(simpson.div.ntdai)
 
-## Teste de diferença estatística entre praias
+## Teste de diferenÃ§a estatÃ­stica entre praias
 
-# Abundância
+# AbundÃ¢ncia
 
 names(waterbird)
 Utest.ab.praias <- wilcox.test(waterbird$totabund ~ waterbird$Beach) 
-Utest.ab.praias # W = 2861, p-value = 0.1957; não há diferença significativa na abundância entre as praias
+Utest.ab.praias # W = 2861, p-value = 0.1957; nÃ£o hÃ¡ diferenÃ§a significativa na abundÃ¢ncia entre as praias
 
-# Número de espécies
+# NÃºmero de espÃ©cies
 
 names(waterbird)
 Utest.riq.praias <- wilcox.test(waterbird$num.spp ~ waterbird$Beach) 
-Utest.riq.praias # W = 3093, p-value = 0.02474; há diferença significativa (mas fraca) no número de espécies entre praias
+Utest.riq.praias # W = 3093, p-value = 0.02474; hÃ¡ diferenÃ§a significativa (mas fraca) no nÃºmero de espÃ©cies entre praias
 bp <- ggplot(bird, aes(x=waterbird$Beach, y=waterbird$num.spp, fill=waterbird$Beach)) + 
   geom_boxplot()
 bp + guides(fill=guide_legend(title=NULL))
 bp <- bp + scale_fill_discrete(name="Beach",
-                               labels=c("Cabras", "Nova Tramandaí"))
+                               labels=c("Cabras", "Nova TramandaÃ­"))
 bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 bp <- bp + theme(legend.position="none") + labs(x = "", y = "Number of species")
 bp <- bp + ggtitle("W = 3093, p-value = 0.02474")
@@ -523,13 +523,13 @@ bp
 
 names(waterbird)
 Utest.shannon.div.praias <- wilcox.test(waterbird$shannon.div ~ waterbird$Beach) 
-Utest.shannon.div.praias # W = 2762, p-value = 0.3718; não há diferença significativa na diversidade de Shannon entre praias
+Utest.shannon.div.praias # W = 2762, p-value = 0.3718; nÃ£o hÃ¡ diferenÃ§a significativa na diversidade de Shannon entre praias
 
 names(waterbird)
 Utest.simpson.div.praias <- wilcox.test(waterbird$simpson.div ~ waterbird$Beach) 
-Utest.simpson.div.praias # W = 2821, p-value = 0.2577; não há diferença significativa na diversidade de Simpson entre praias
+Utest.simpson.div.praias # W = 2821, p-value = 0.2577; nÃ£o hÃ¡ diferenÃ§a significativa na diversidade de Simpson entre praias
 
-## NÚMERO DE ESPÉCIES EM CADA HORÁRIO E PRAIA
+## NÃšMERO DE ESPÃ‰CIES EM CADA HORÃRIO E PRAIA
 
 library(vegan)
 specnumber(waterbird[,15:39], bird$Time, MARGIN = 1)
@@ -544,7 +544,7 @@ bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linety
 bp <- bp + theme(legend.position=c(0.9,0.9)) + labs(x = "", y = "Number of species")
 bp
 
-## NÚMERO DE AVES EM CADA HORÁRIO E PRAIA
+## NÃšMERO DE AVES EM CADA HORÃRIO E PRAIA
 
 bp <- ggplot(waterbird, aes(x=circa.time, y=log(waterbird$totabund), fill=waterbird$Beach)) + 
   geom_boxplot()
@@ -555,7 +555,7 @@ bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linety
 bp <- bp + theme(legend.position=c(0.9,0.9)) + labs(x = "", y = "Total abundance")
 bp
 
-## DIVERSIDADE DE AVES EM CADA HORÁRIO E PRAIA
+## DIVERSIDADE DE AVES EM CADA HORÃRIO E PRAIA
 
 bp <- ggplot(waterbird, aes(x=circa.time, y=waterbird$shannon.div, fill=waterbird$Beach)) + 
   geom_boxplot()
@@ -564,9 +564,9 @@ bp <- bp + scale_fill_discrete(name="Area",
                                labels=c("Non urban", "Urban"))
 bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 bp <- bp + theme(legend.position=c(0.9,0.9)) + labs(x = "", y = "Species diversity (Shannon index)")
-bp # diversidade é maior em Nova Tramandaí apenas à noite
+bp # diversidade Ã© maior em Nova TramandaÃ­ apenas Ã  noite
 
-## CURVA DE ACUMULAÇÃO DE ESPÉCIES - Function 'specaccum' finds species accumulation curves or the number of species for a certain number of sampled sites or individuals.
+## CURVA DE ACUMULAÃ‡ÃƒO DE ESPÃ‰CIES - Function 'specaccum' finds species accumulation curves or the number of species for a certain number of sampled sites or individuals.
 sac <- specaccum(waterbird[,15:39], method = "random")
 plot(sac, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue", main = "All dataset")
 boxplot(sac, col="yellow", add=TRUE, pch="+")
@@ -576,7 +576,7 @@ sac.cabras <- specaccum(waterbird.cabras[,15:39], method = "random")
 plot(sac.cabras, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue", main = "Cabras")
 boxplot(sac.cabras, col="yellow", add=TRUE, pch="+")
 
-# Nova Tramandaí
+# Nova TramandaÃ­
 sac.ntdai <- specaccum(waterbird.ntdai[,15:39], method = "random")
 plot(sac.ntdai, ci.type="poly", col="blue", lwd=2, ci.lty=0, ci.col="lightblue", main = "Nova Tdai")
 boxplot(sac.ntdai, col="yellow", add=TRUE, pch="+")
@@ -596,10 +596,10 @@ waterbird$pielou.even <- waterbird$shannon.div/log(specnumber(waterbird[,15:39])
 boxplot(waterbird$pielou.even~waterbird$Time)
 pielou.even.cabras <- waterbird.cabras$shannon.div/log(specnumber(waterbird.cabras[,15:39]))
 pielou.even.ntdai <- waterbird.ntdai$shannon.div/log(specnumber(waterbird.ntdai[,15:39]))
-boxplot(pielou.even.cabras~circa.time.cabras) ##maior ocorrência de espécies dominantes em evening
+boxplot(pielou.even.cabras~circa.time.cabras) ##maior ocorrÃªncia de espÃ©cies dominantes em evening
 boxplot(pielou.even.ntdai~circa.time.ntdai)
-kruskal.test.cabras <- kruskal.test(pielou.even.cabras~circa.time.cabras) # sem diferença estatística significativa
-kruskal.test.ntdai <- kruskal.test(pielou.even.ntdai~circa.time.ntdai) # sem diferença estatística significativa
+kruskal.test.cabras <- kruskal.test(pielou.even.cabras~circa.time.cabras) # sem diferenÃ§a estatÃ­stica significativa
+kruskal.test.ntdai <- kruskal.test(pielou.even.ntdai~circa.time.ntdai) # sem diferenÃ§a estatÃ­stica significativa
 
 library(ggplot2)
 bp <- ggplot(waterbird, aes(x=circa.time, y=waterbird$pielou.even, fill=waterbird$Beach)) + 
@@ -610,31 +610,31 @@ bp <- bp + scale_fill_discrete(name="Area",
 bp <- bp + theme(legend.background = element_rect(fill="gray90", size=.5, linetype="dotted"))
 bp <- bp + theme(legend.position=c(0.1,0.1)) + labs(x = "", y = "Pielou's evenness")
 
-## Riqueza de espécies com rarefação
+## Riqueza de espÃ©cies com rarefaÃ§Ã£o
 #### Rarefaction curves often are seen as an objective solution for comparing 
 # species richness with different sample sizes. However, rank orders typically 
 # differ among different rarefaction sample sizes, rarefaction curves can cross.
 
-# Número de espécies
-specnumber(waterbird[,15:39]) # número de espécies em cada censo
-max(specnumber(waterbird[,15:39])) # número máximo de espécies observadas em um único censo
-min(specnumber(waterbird[,15:39])) # número mínimo de espécies observadas em um único censo
+# NÃºmero de espÃ©cies
+specnumber(waterbird[,15:39]) # nÃºmero de espÃ©cies em cada censo
+max(specnumber(waterbird[,15:39])) # nÃºmero mÃ¡ximo de espÃ©cies observadas em um Ãºnico censo
+min(specnumber(waterbird[,15:39])) # nÃºmero mÃ­nimo de espÃ©cies observadas em um Ãºnico censo
 
-# Número de espécies - Cabras
-specnumber(waterbird.cabras[,15:39]) # número de espécies em cada censo
-max(specnumber(waterbird.cabras[,15:39])) # número máximo de espécies observadas em um único censo
-min(specnumber(waterbird.cabras[,15:39])) # número mínimo de espécies observadas em um único censo
+# NÃºmero de espÃ©cies - Cabras
+specnumber(waterbird.cabras[,15:39]) # nÃºmero de espÃ©cies em cada censo
+max(specnumber(waterbird.cabras[,15:39])) # nÃºmero mÃ¡ximo de espÃ©cies observadas em um Ãºnico censo
+min(specnumber(waterbird.cabras[,15:39])) # nÃºmero mÃ­nimo de espÃ©cies observadas em um Ãºnico censo
 
-# Número de espécies - Nova Tramandaí
-specnumber(waterbird.ntdai[,15:39]) # número de espécies em cada censo
-max(specnumber(waterbird.ntdai[,15:39])) # número máximo de espécies observadas em um único censo
-min(specnumber(waterbird.ntdai[,15:39])) # número mínimo de espécies observadas em um único censo
+# NÃºmero de espÃ©cies - Nova TramandaÃ­
+specnumber(waterbird.ntdai[,15:39]) # nÃºmero de espÃ©cies em cada censo
+max(specnumber(waterbird.ntdai[,15:39])) # nÃºmero mÃ¡ximo de espÃ©cies observadas em um Ãºnico censo
+min(specnumber(waterbird.ntdai[,15:39])) # nÃºmero mÃ­nimo de espÃ©cies observadas em um Ãºnico censo
 
 
 waterbird[,15:39>0] <- 1
 waterbird[waterbird > 0] <- 1
 
-## CRIANDO UMA MATRIZ BINÁRIA
+## CRIANDO UMA MATRIZ BINÃRIA
 
 waterbin <- ifelse(waterbird[,15:39]>0, 1, 0)
 head(waterbin)
@@ -670,7 +670,7 @@ head(waterbin)
 a <- rowSums(waterbin[,3:27]!=0)
 waterbin <- waterbin[-c(60, 66), ]
 
-## Calculando distância
+## Calculando distÃ¢ncia
 
 dist.beach <- subset(waterbin, select = -c(Time))
 names(dist.beach)
@@ -689,13 +689,13 @@ dist.time.ntdai <- subset(dist.time.ntdai, select = -c(Beach))
 library(vegan)
 names(waterbird)
 
-# Remover censos sem observação
+# Remover censos sem observaÃ§Ã£o
 a <- rowSums(waterbird[,15:39]!=0)
 waterbird <- waterbird[-c(60, 66), ]
 
-# Transformação de dados
-Data2 <- decostand(waterbird[,15:39], "max") #divide todos os valores pelo valor máximo encontrado em uma linha
-NMDSdata <- decostand(waterbird[,15:39], "total") #divide todos os valores pelo valor máximo encontrado nas colunas
+# TransformaÃ§Ã£o de dados
+Data2 <- decostand(waterbird[,15:39], "max") #divide todos os valores pelo valor mÃ¡ximo encontrado em uma linha
+NMDSdata <- decostand(waterbird[,15:39], "total") #divide todos os valores pelo valor mÃ¡ximo encontrado nas colunas
 log.waterbird <- log(waterbird[,15:39])
 
 # Fazendo com dados transformados = decostand "total"
@@ -779,7 +779,7 @@ mtext(side=3, line=-1, adj=0.98, paste('STRESS=',round(nMDS1$stress, 3),sep=''),
 legend("bottomright", c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"), col=c("black", "orange", "yellow", "violet", "green", "red3", "blue"),
        text.col = "black", pch=16, cex=1.1, xpd=T)
 
-# Fazendo com dados brutos para a praia de Nova Tramandaí separadamente
+# Fazendo com dados brutos para a praia de Nova TramandaÃ­ separadamente
 
 initial_nMDS1 <- metaMDS(waterbird.ntdai[,15:39], distance="jaccard", k=2, trymax=1000)
 nMDS1 <- metaMDS(waterbird.ntdai[,15:39], previous.best = initial_nMDS1, k=2, trymax=1000)
@@ -797,7 +797,7 @@ mtext(side=3, line=-1, adj=0.98, paste('STRESS=',round(nMDS1$stress, 3),sep=''),
 legend("bottomright", c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"), col=c("black", "orange", "yellow", "violet", "green", "red3", "blue"),
        text.col = "black", pch=16, cex=0.9, xpd=T)
 
-# Fazendo com dados brutos e matriz binária
+# Fazendo com dados brutos e matriz binÃ¡ria
 waterbin <- waterbin[-c(60, 66), ]
 
 names(waterbin)
@@ -817,7 +817,7 @@ mtext(side=3, line=-1, adj=0.98, paste('STRESS=',round(nMDS1$stress, 3),sep=''),
 legend("bottomright", c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Sunset", "Evening"), col=c("black", "orange", "yellow", "violet", "green", "red3", "blue"),
        text.col = "black", pch=16, cex=0.9, xpd=T)
 
-# Fazendo com dados brutos e matriz binária entre praias
+# Fazendo com dados brutos e matriz binÃ¡ria entre praias
 
 library(vegan)
 initial_nMDS1 <- metaMDS(waterbin[,3:27], distance="jaccard", k=2, trymax=1000)
@@ -837,7 +837,7 @@ legend("bottomleft", c("Non_urban", "Urban"),
        col=c("black", "orange"),
        text.col = "black", pch=16, cex=0.9, xpd=T)
 
-# Fazendo com dados brutos e matriz binária da praia das Cabras
+# Fazendo com dados brutos e matriz binÃ¡ria da praia das Cabras
 
 library(vegan)
 initial_nMDS1 <- metaMDS(waterbin.cabras[,3:27], distance="jaccard", k=2, trymax=1000)
@@ -858,7 +858,7 @@ legend("bottomleft", c("Night", "Sunrise", "Morning", "Midday", "Afternoon", "Su
        col=c("black", "orange", "yellow", "violet", "green", "red3", "blue"),
        text.col = "black", pch=16, cex=0.9, xpd=T)
 
-# Fazendo com dados brutos e matriz binária da praia de Nova Tramandaí
+# Fazendo com dados brutos e matriz binÃ¡ria da praia de Nova TramandaÃ­
 
 
 initial_nMDS1 <- metaMDS(waterbin.ntdai[,3:27], distance="jaccard", k=2, trymax=1000)
@@ -934,7 +934,7 @@ hull <- hull + theme(legend.title=element_blank())
 hull <- hull + geom_text(x=3, y=30, paste('STRESS=',round(nMDS1$stress, 3),sep=''))
 hull
 
-# Entre horários
+# Entre horÃ¡rios
 data.scores <- as.data.frame(scores(nMDS1))  #Using the scores function from vegan to extract the site scores and convert to a data.frame
 data.scores$site <- rownames(data.scores)  # create a column of site names, from the rownames of data.scores
 data.scores$grp <- waterbird$Beach  #  add the grp variable created earlier
@@ -999,19 +999,19 @@ library(vegan)
 # Global
 permanova <- adonis(waterbird[,16:40] ~ waterbird$Beach + waterbird$Time, permutations=999, 
                     distance='jaccard')
-permanova ## há diferença significativa na composição das comunidades entre praias e entre horários (p < 0.001; F = 15,4633 (praia) e F = 4,3593 (hor))
+permanova ## hÃ¡ diferenÃ§a significativa na composiÃ§Ã£o das comunidades entre praias e entre horÃ¡rios (p < 0.001; F = 15,4633 (praia) e F = 4,3593 (hor))
 
 # Por tempo nas Cabras
 permanova.cabras <- adonis(waterbird.cabras[,16:40] ~ waterbird.cabras$Time, permutations=999, 
                     distance='jaccard')
-permanova.cabras ## há diferença significativa na composição das comunidades ntre horários na praia das Cabras (p < 0.001; F = 4,32)
+permanova.cabras ## hÃ¡ diferenÃ§a significativa na composiÃ§Ã£o das comunidades ntre horÃ¡rios na praia das Cabras (p < 0.001; F = 4,32)
 
 # Por tempo em N_Tdai
 permanova.ntdai <- adonis(waterbird.ntdai[,16:40] ~ waterbird.ntdai$Time, permutations=999, 
                            distance='jaccard')
-permanova.ntdai ## há diferença significativa na composição das comunidades entre horários em N Tdai (p < 0.001; F = 2,29)
+permanova.ntdai ## hÃ¡ diferenÃ§a significativa na composiÃ§Ã£o das comunidades entre horÃ¡rios em N Tdai (p < 0.001; F = 2,29)
 
-## Posthoc para PERMANOVA (comparações par a par)
+## Posthoc para PERMANOVA (comparaÃ§Ãµes par a par)
 
 library(devtools)
 install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis", force=TRUE) 
